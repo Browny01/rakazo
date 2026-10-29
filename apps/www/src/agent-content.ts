@@ -194,6 +194,8 @@ List a plugin in the Rakazo marketplace. We review every submission and email th
 
 The plugin must be a public GitHub repository with a plugin manifest (\`plugin.json\` following [Agent Plugins](https://agent-plugins.org), or \`.cursor-plugin/plugin.json\`) and skills, a hosted MCP server, or both.
 
+[Build a plugin](https://rakazo.com/docs/build-a-plugin/) describes the format and what review checks. The [hello world plugin](https://github.com/elie222/rakazo/tree/main/examples/plugins/hello-world) is a complete example.
+
 ## Submit with the API
 
 \`POST ${PLUGIN_SUBMISSIONS_URL}\` with a JSON body. No account or key is needed.

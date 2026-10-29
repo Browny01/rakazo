@@ -1,4 +1,8 @@
+import { readdirSync, readFileSync } from "node:fs";
+import { join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it, vi } from "vitest";
+import { BUILTIN_AGENT_SKILLS } from "./builtin-skills.js";
 import type { PluginRepoFile } from "./plugin-connectors.js";
 import {
   classifyPluginFiles,
@@ -448,5 +452,23 @@ describe("GitHub acquisition", () => {
     });
     expect(preview.source.subdir).toBe("one");
     expect(preview.skills).toHaveLength(1);
+  });
+});
+
+describe("example plugin", () => {
+  // The plugin the docs and submit page point to must keep passing the same gate as approval.
+  it("installs completely", () => {
+    const root = fileURLToPath(new URL("../../../examples/plugins/hello-world", import.meta.url));
+    const files = readdirSync(root, { recursive: true, withFileTypes: true })
+      .filter((entry) => entry.isFile())
+      .map((entry) => {
+        const path = join(entry.parentPath, entry.name);
+        return { path: relative(root, path), content: readFileSync(path, "utf8") };
+      });
+    const plugin = parsePluginDirectory({ files, resolvedSha: SHA });
+    expect(plugin).toMatchObject({ format: "agent-plugins", name: "hello-world", skipped: [] });
+    expect(plugin.skills.map((s) => s.name)).toEqual(["say-hello"]);
+    const builtins = BUILTIN_AGENT_SKILLS.map((s) => s.name.toLowerCase());
+    expect(plugin.skills.some((s) => builtins.includes(s.name))).toBe(false);
   });
 });
