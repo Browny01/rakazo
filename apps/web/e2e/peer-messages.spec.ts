@@ -93,7 +93,29 @@ test("shows peer lines in transcript and opens view-only peer chat", async ({ pa
   await expect(view).toBeVisible();
   await expect(view.getByRole("heading", { name: /Chief\s*Researcher/ })).toBeVisible();
   await expect(transcript.getByTestId("peer-replies-toggle")).toHaveCount(0);
-  await expect(view.getByRole("button", { name: "Close Chat" })).toHaveCount(1);
+  const close = view.getByRole("button", { name: "Close", exact: true });
+  await expect(close).toHaveCount(1);
+  await expect(close.locator("svg")).toBeVisible();
+  await expect(close).toHaveText("");
+  const closeBox = await close.boundingBox();
+  const titleBox = await view.getByRole("heading").boundingBox();
+  expect(closeBox).not.toBeNull();
+  expect(titleBox).not.toBeNull();
+  const assertTitleCentered = async () => {
+    const viewBox = await view.boundingBox();
+    const headingBox = await view.getByRole("heading").boundingBox();
+    const buttonBox = await close.boundingBox();
+    expect(viewBox).not.toBeNull();
+    expect(headingBox).not.toBeNull();
+    expect(buttonBox).not.toBeNull();
+    expect(
+      Math.abs(headingBox!.x + headingBox!.width / 2 - (viewBox!.x + viewBox!.width / 2)),
+    ).toBeLessThanOrEqual(1);
+    expect(headingBox!.x + headingBox!.width).toBeLessThanOrEqual(buttonBox!.x);
+  };
+  await assertTitleCentered();
+  expect(closeBox!.y).toBeLessThan(24);
+  expect(closeBox!.x + closeBox!.width).toBeGreaterThan(350);
   await expect(view.getByText("peer-exchange-alpha").first()).toBeVisible({
     timeout: 30_000,
   });
@@ -109,7 +131,7 @@ test("shows peer lines in transcript and opens view-only peer chat", async ({ pa
     .toBe(true);
   await captureScreenshot(page, testInfo, "peer-view-only");
 
-  await view.getByRole("button", { name: "Close Chat" }).click();
+  await view.getByRole("button", { name: "Close" }).click();
   await expect(view).toHaveCount(0);
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.evaluate(() => {
@@ -143,9 +165,10 @@ test("shows peer lines in transcript and opens view-only peer chat", async ({ pa
   await chip.scrollIntoViewIfNeeded();
   await chip.click();
   await expect(view).toBeVisible();
+  await assertTitleCentered();
   const avatarsLeft = await view
-    .locator('[aria-hidden="true"].app-drag')
-    .evaluate((spacer) => spacer.nextElementSibling!.getBoundingClientRect().left);
+    .getByRole("heading")
+    .evaluate((heading) => heading.getBoundingClientRect().left);
   // macOS draws the traffic lights from x=16 to about x=68 in the window's top-left corner.
   expect(avatarsLeft).toBeGreaterThan(80);
   await captureScreenshot(page, testInfo, "peer-view-only-macos-desktop");
@@ -222,7 +245,7 @@ test(
     await expect(view).toBeVisible();
     await expect(view.getByText(foldedReplyText).first()).toBeVisible();
     await captureScreenshot(page, testInfo, "peer-line-read-only-chat");
-    await view.getByRole("button", { name: "Close Chat" }).click();
+    await view.getByRole("button", { name: "Close" }).click();
 
     // A search hit on a folded reply expands its marker and scrolls to it.
     await expect(page.getByRole("button", { name: "Send" })).toBeVisible({ timeout: 60_000 });
