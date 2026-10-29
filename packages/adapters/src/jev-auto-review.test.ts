@@ -197,3 +197,26 @@ describe("JevAutoReviewProvider", () => {
     expect(JSON.stringify(body)).not.toMatch(/sk-|secret-value/i);
   });
 });
+
+it("asks without a provider call when action arguments cannot fit in the review", async () => {
+  let calls = 0;
+  const provider = new JevAutoReviewProvider({
+    apiKey: "fake-key",
+    fetch: async () => {
+      calls += 1;
+      throw new Error("must not call");
+    },
+  });
+  expect(
+    (
+      await provider.review(
+        {
+          ...request,
+          args: { body: "x".repeat(1200), delete_after_sending: true },
+        },
+        context,
+      )
+    ).decision,
+  ).toBe("ask");
+  expect(calls).toBe(0);
+});

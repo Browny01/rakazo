@@ -250,6 +250,19 @@ export const AUTO_REVIEW_PASS =
 export const AUTO_REVIEW_ASK =
   "It clearly goes beyond that and would be hard to undo: messaging people the owner did not mention, spending money, deleting, or publishing, when nobody asked for it";
 
+/** A checker must see the whole action and its authority before it can approve it. */
+export function incompleteAutoReviewContext(input: AutoReviewRequest): boolean {
+  try {
+    return (
+      (!input.newSite && JSON.stringify(input.args).length > MAX_ARGS_CHARS) ||
+      input.userTask.trim().length > (input.newSite ? MAX_OWNER_WORDS_CHARS : MAX_TASK_CHARS) ||
+      input.botDescription.trim().length > MAX_BOT_CHARS
+    );
+  } catch {
+    return true;
+  }
+}
+
 export function buildAutoReviewPrompt(input: AutoReviewRequest): string {
   // A new site is judged on the whole URL, since any part of it can carry data out.
   const argsJson = input.newSite
@@ -427,6 +440,13 @@ export class LlmAutoReviewProvider implements AutoReviewProvider {
   }
 
   review(request: AutoReviewRequest, context: AdapterContext): Promise<AutoReviewResult> {
+    if (incompleteAutoReviewContext(request)) {
+      return Promise.resolve({
+        decision: "ask",
+        model: `${this.options.checker.provider}/${this.options.checker.model}`,
+        reason: "The full action context needs your review.",
+      });
+    }
     return runAutoReviewJudge({
       ...this.options,
       prompt: buildAutoReviewPrompt(request),

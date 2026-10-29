@@ -5,6 +5,7 @@ import {
   autoReviewTimeoutMs,
   buildAutoReviewPrompt,
   isAutoReviewCheckerConfigured,
+  LlmAutoReviewProvider,
   parseAutoReviewJudgeText,
   redactToolArgsForReview,
   resolveAutoReviewChecker,
@@ -535,4 +536,40 @@ describe("runAutoReviewJudge timeout", () => {
     ).resolves.toMatchObject({ decision: "error", reason: "Checker failed." });
     expect(seen?.aborted).toBe(true);
   });
+});
+
+describe("incomplete review context", () => {
+  it.each(["args", "userTask", "botDescription"] as const)(
+    "asks without calling the model when %s would be truncated",
+    async (field) => {
+      const run = vi.fn();
+      const provider = new LlmAutoReviewProvider({
+        runtime: { run } as never,
+        checker: { provider: "local", model: "checker" },
+        runId: "run",
+        spaceId: "space",
+        userId: "user",
+        botId: "bot",
+        threadId: "thread",
+      });
+      const request = {
+        toolName: "gmail_send_email",
+        connectorKind: "gmail",
+        args: { to: "recipient@example.test" },
+        userTask: "Draft a reply",
+        botDescription: "Mail helper",
+        matchingRules: [],
+        [field]: field === "args" ? { body: "x".repeat(1200) } : "x".repeat(2001),
+      };
+      const result = await provider.review(request, {
+        operationId: "review",
+        traceId: "trace",
+        spaceId: "space",
+        userId: "user",
+        signal: new AbortController().signal,
+      });
+      expect(result.decision).toBe("ask");
+      expect(run).not.toHaveBeenCalled();
+    },
+  );
 });
