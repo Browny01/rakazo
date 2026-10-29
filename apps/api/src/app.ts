@@ -104,7 +104,7 @@ import {
   PLUGIN_SUBMISSIONS_PATH,
   SERVER_BUILD_HEADER,
 } from "@rakazo/contracts";
-import { signupPolicyFromEnv } from "@rakazo/core";
+import { encryptionKeyWarning, signupPolicyFromEnv } from "@rakazo/core";
 import type { Pool, PrismaClient } from "@rakazo/db";
 import {
   createBoardEvents,
@@ -292,6 +292,8 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
   });
   const rowSecurity = rowSecurityWarning(await describeRowSecurity(prisma));
   if (rowSecurity) logger.warn(rowSecurity);
+  const weakEncryptionKey = encryptionKeyWarning(process.env);
+  if (weakEncryptionKey) logger.warn(weakEncryptionKey);
   const realtime =
     realtimeOverride ??
     (created.pool
@@ -370,7 +372,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
   });
   const sandbox: SandboxProvider =
     sandboxOverride ??
-    createRunSandbox(env.sandboxProvider, {
+    (await createRunSandbox(env.sandboxProvider, {
       ...sandboxProviderOptionsFromEnv(),
       supervisorUrl: env.sandboxSupervisorUrl,
       supervisorToken: env.sandboxSupervisorToken,
@@ -384,7 +386,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
       boatApiUrl: env.boatApiUrl,
       dataDir: env.dataDir,
       prisma,
-    });
+    }));
   const mcpOAuth = new McpOAuthBroker(
     prisma,
     secrets,
@@ -756,6 +758,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
       navLinks: env.navLinks,
       adminEmails: env.adminEmails,
       maxUploadSizeBytes: env.maxUploadSizeBytes,
+      maxAttachmentsPerMessage: env.maxAttachmentsPerMessage,
       agentRuntime: env.agentRuntime,
       defaultProvider: env.defaultProvider,
       defaultModel: env.defaultModel,

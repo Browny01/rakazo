@@ -15,7 +15,9 @@ import {
   autoReviewTimeoutMs,
   incompleteAutoReviewContext,
   MAX_OWNER_WORDS_CHARS,
+  reviewArgsTooLong,
   sanitizeAutoReviewReason,
+  TOO_LONG_TO_REVIEW,
   truncateReviewText,
 } from "./auto-review.js";
 
@@ -42,6 +44,9 @@ export class DecisionAutoReviewProvider implements AutoReviewProvider {
   }
   async review(request: AutoReviewRequest, context: AdapterContext): Promise<AutoReviewResult> {
     const modelLabel = `${this.options.providerId}/${this.options.model}`;
+    if (reviewArgsTooLong(request)) {
+      return { decision: "ask", model: modelLabel, reason: TOO_LONG_TO_REVIEW };
+    }
     if (incompleteAutoReviewContext(request)) {
       return {
         decision: "ask",
@@ -57,7 +62,6 @@ export class DecisionAutoReviewProvider implements AutoReviewProvider {
             rubricVersion: APPROVAL_DECISION_RUBRIC_VERSION,
             toolName: request.toolName,
             connectorKind: request.connectorKind,
-            // A new site is judged on the whole URL, since any part of it can carry data out.
             args: request.args,
             userTask: truncateReviewText(
               request.userTask,
