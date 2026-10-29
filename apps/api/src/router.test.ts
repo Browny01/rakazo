@@ -2379,6 +2379,33 @@ describe("MCP server health", () => {
       expect(listed?.health).toMatchObject({ status: "error", code: MCP_OAUTH_CLIENT_REQUIRED });
     });
 
+    it("uses the registered web callback when a native client omits the redirect", async () => {
+      const h = harness({
+        row: baseRow({ transport: "streamable_http", endpoint: "https://mcp.example.test/mcp" }),
+      });
+      const begin = vi.fn(async () => ({ status: "already_connected" as const }));
+      Object.assign(h.deps, { mcpOAuth: { ...(h.deps.mcpOAuth as object), begin } });
+      const client = createRouterClient(createRouter(h.deps), {
+        context: {
+          actor: {
+            spaceId: "workspace-1",
+            userId: "owner-1",
+            email: "owner@rakazo.test",
+            isDeploymentOwner: true,
+          },
+        } as never,
+      });
+
+      await expect(client.mcp.oauth.begin({ serverId: "server-1" })).resolves.toEqual({
+        status: "already_connected",
+      });
+      expect(begin).toHaveBeenCalledWith(
+        expect.objectContaining({
+          redirectUri: new URL("/mcp/oauth/callback", h.deps.env.webOrigin).toString(),
+        }),
+      );
+    });
+
     it("probes the server once its OAuth session completes", async () => {
       const h = harness({ row: baseRow() });
       const complete = vi.fn(async () => undefined);

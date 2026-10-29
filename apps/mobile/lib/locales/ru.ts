@@ -754,7 +754,6 @@ export const RU_MESSAGES: Record<string, string> = {
   Agent: "Агент",
   archived: "в архиве",
   Attachment: "Вложение",
-  "Bearer authentication": "Аутентификация Bearer",
   bot: "бот",
   "{from} messaged {to}": "{from} отправил сообщение {to}",
   "Bring your own key. ElevenLabs, OpenAI, and Cartesia all plug into the same speak buttons.":
@@ -779,7 +778,6 @@ export const RU_MESSAGES: Record<string, string> = {
   "Message from {peer}": "Сообщение от {peer}",
   subagent: "субагент",
   "Messaged {peer}": "Отправлено сообщение {peer}",
-  "No authentication": "Нет аутентификации",
   "No connection record found for {name}.": "Для {name} не найдено записей о подключении.",
   "Not in the plugin catalog": "Нет в каталоге плагинов",
   "Open conversation": "Открыть диалог",
@@ -975,6 +973,7 @@ export const RU_MESSAGES: Record<string, string> = {
   "OAuth expired": "Срок действия OAuth истёк",
   "Needs an OAuth client ID": "Нужен идентификатор клиента OAuth",
   "Credential saved": "Учётные данные сохранены",
+  Authentication: "Способ аутентификации",
   "No auth": "Без авторизации",
   "The bot couldn't reply because its provider's daily limit was reached.":
     "Бот не смог ответить, потому что достигнут дневной лимит его провайдера.",
@@ -1144,6 +1143,13 @@ export const RU_MESSAGES: Record<string, string> = {
   "{from} to {to}": "{from} — {to}",
   "Every {day}": "Каждую неделю: {day}",
   "Every {days} and {last}": "Каждую неделю: {days} и {last}",
+
+  // Native remote MCP authentication controls.
+  "API key header name": "Имя заголовка API-ключа",
+  Bearer: "Bearer",
+  "Connect OAuth": "Подключить через OAuth",
+  "Could not start MCP OAuth": "Не удалось запустить OAuth для MCP",
+  OAuth: "OAuth",
   "Always open {site}": "Всегда открывать {site}",
   "Trusted sites": "Доверенные сайты",
   "Run history": "История запусков",

@@ -721,7 +721,6 @@ export const ZH_MESSAGES: Record<string, string> = {
   Agent: "智能体",
   archived: "已归档",
   Attachment: "附件",
-  "Bearer authentication": "Bearer 认证",
   bot: "Bot",
   "{from} messaged {to}": "{from} 已向 {to} 发消息",
   "Bring your own key. ElevenLabs, OpenAI, Cartesia, and Fish Audio all plug into the same speak buttons.":
@@ -746,7 +745,6 @@ export const ZH_MESSAGES: Record<string, string> = {
   "Message from {peer}": "来自 {peer} 的消息",
   subagent: "子智能体",
   "Messaged {peer}": "已给 {peer} 发消息",
-  "No authentication": "无认证",
   "No connection record found for {name}.": "未找到 {name} 的连接记录。",
   "Not in the plugin catalog": "不在插件目录中",
   "Open conversation": "打开对话",
@@ -937,6 +935,7 @@ export const ZH_MESSAGES: Record<string, string> = {
   "OAuth expired": "OAuth 已过期",
   "Needs an OAuth client ID": "需要 OAuth 客户端 ID",
   "Credential saved": "凭据已保存",
+  Authentication: "身份验证方式",
   "No auth": "无需身份验证",
   "The bot couldn't reply because its provider's daily limit was reached.":
     "机器人无法回复，因为已达到其提供商的每日限额。",
@@ -1101,6 +1100,13 @@ export const ZH_MESSAGES: Record<string, string> = {
   "{from} to {to}": "{from}至{to}",
   "Every {day}": "每{day}",
   "Every {days} and {last}": "每{days}和{last}",
+
+  // Native remote MCP authentication controls.
+  "API key header name": "API 密钥请求头名称",
+  Bearer: "Bearer",
+  "Connect OAuth": "通过 OAuth 连接",
+  "Could not start MCP OAuth": "无法启动 MCP OAuth 授权",
+  OAuth: "OAuth",
   "Always open {site}": "始终打开 {site}",
   "Trusted sites": "受信任的网站",
   "Run history": "运行记录",

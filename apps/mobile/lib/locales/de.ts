@@ -550,7 +550,6 @@ export const DE_MESSAGES: Record<string, string> = {
   "Add {name}": "{name} hinzufügen",
   Added: "Hinzugefügt",
   Back: "Zurück",
-  "Bearer authentication": "Bearer-Authentifizierung",
   "Bearer token": "Bearer-Token",
   "Connect Executor": "Executor verbinden",
   "Connect Treg": "Treg verbinden",
@@ -569,7 +568,6 @@ export const DE_MESSAGES: Record<string, string> = {
   "GraphQL endpoint": "GraphQL-Endpunkt",
   "Loading tools…": "Tools werden geladen…",
   "No apps match your search.": "Keine Apps entsprechen deiner Suche.",
-  "No authentication": "Keine Authentifizierung",
   "No tools available.": "Keine Tools verfügbar.",
   "Not in the plugin catalog": "Nicht im Plugin-Katalog",
   "OpenAPI JSON": "OpenAPI-JSON",
@@ -944,6 +942,7 @@ export const DE_MESSAGES: Record<string, string> = {
   "OAuth expired": "OAuth abgelaufen",
   "Needs an OAuth client ID": "Benötigt eine OAuth-Client-ID",
   "Credential saved": "Zugangsdaten gespeichert",
+  Authentication: "Authentifizierungsmethode",
   "No auth": "Keine Authentifizierung",
   "The bot couldn't reply because its provider's daily limit was reached.":
     "Der Bot konnte nicht antworten, weil das Tageslimit seines Anbieters erreicht wurde.",
@@ -1112,6 +1111,13 @@ export const DE_MESSAGES: Record<string, string> = {
   "{from} to {to}": "{from} bis {to}",
   "Every {day}": "Jeden {day}",
   "Every {days} and {last}": "Jeden {days} und {last}",
+
+  // Native remote MCP authentication controls.
+  "API key header name": "Name des API-Schlüssel-Headers",
+  Bearer: "Bearer",
+  "Connect OAuth": "Mit OAuth verbinden",
+  "Could not start MCP OAuth": "MCP-OAuth konnte nicht gestartet werden",
+  OAuth: "OAuth",
   "Always open {site}": "Immer {site} öffnen",
   "Trusted sites": "Vertrauenswürdige Websites",
   "Run history": "Ausführungsverlauf",
