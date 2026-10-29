@@ -180,6 +180,14 @@ export async function provisionComputer(
   const started = performance.now();
   const log = getLogger().child({ "computer.id": computerId, "run.id": context.runId });
   let existing = await deps.prisma.computer.findUniqueOrThrow({ where: { id: computerId } });
+  if (
+    existing.scope !== "team" &&
+    (existing.kind === "wuying" || deps.sandbox.describe?.().id === "wuying")
+  ) {
+    throw new Error(
+      "Wuying supports Team Computers only. Select a Team Computer instead of a Private Computer.",
+    );
+  }
   if (existing.state === "quarantined")
     throw new Error("Computer requires recovery after an unconfirmed stop");
   if (existing.maintenanceId && existing.maintenanceId !== context.operationId)
@@ -947,7 +955,7 @@ function isUniqueConstraintError(error: unknown) {
 export type ComputerReplaceMode = "recover" | "reset" | "update";
 
 export function computerSupportsUpdate(kind: string): boolean {
-  return kind !== "desktop";
+  return kind !== "desktop" && kind !== "wuying";
 }
 
 /** Kinds whose provider opens a user terminal through the shared Linux screen gateway. */

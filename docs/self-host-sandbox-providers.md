@@ -164,6 +164,43 @@ Bind it to the service account the API and worker run as with a `RoleBinding`. A
 that admits only the API, worker and web pods to the computer pods, and denies their egress to
 private ranges, is recommended.
 
+## `wuying`
+
+Bot computers run on one existing Wuying (无影) cloud computer. Each computer's home is a folder
+under the desktop user's profile (`%USERPROFILE%\rakazo\<home>`), and the desktop's own disk
+keeps it between stops, so nothing is copied in or out. Commands run in PowerShell; files,
+screenshots and input go through the desktop's MCP gateway. Stopping the computer powers the
+desktop off; deleting it removes only its home folder, never the desktop.
+
+| Variable | Notes |
+| --- | --- |
+| `WUYING_ACCESS_KEY_ID` / `WUYING_ACCESS_KEY_SECRET` | RAM user allowed `ecd:DescribeDesktops`, `ecd:StartDesktops`, `ecd:StopDesktops` and `appstream-center:GetAuthCode`. API and worker only |
+| `WUYING_REGION_ID` | Defaults to `cn-hangzhou` |
+| `WUYING_DESKTOP_ID` | The cloud computer, assigned to the end user below |
+| `WUYING_END_USER_ID` | Screen logins are issued for this user |
+| `WUYING_MCP_URL` / `WUYING_MCP_TOKEN` | The desktop's MCP gateway and its bearer token |
+
+The web and Electron screen is drawn by the Wuying Web SDK in `/wuying/screen.html`, served by
+the web app. Mobile rejects the custom screen URL and does not embed this SDK. The
+SDK is not committed; fetch the pinned release before building the web app:
+
+```bash
+node scripts/wuying-web-sdk.mjs
+```
+
+The SDK runs in an opaque-origin sandboxed frame with an in-memory storage shim and a no-op
+cookie accessor in both its launcher and nested runtime. A CSP scoped to `/wuying/` permits
+the vendor hosts, blob workers and WebAssembly compilation. The one-time login code stays
+only in the URL fragment, outside HTTP requests and Referer.
+
+Wuying supports **Team Computers only**; starting or reconnecting a Private Computer is refused.
+All bots, users and spaces configured with this provider share the same Windows desktop and
+account permissions, including files outside their workspace folders. Use it only in a trusted
+team deployment.
+The gateway bounds each call to one minute, 16 KiB of command output and 1,000 folder entries.
+A command allowed longer than a minute runs detached with its output in files under
+`%USERPROFILE%\rakazo\.runs`, read back every second and removed when it ends or is cancelled.
+
 ## `none`
 
 Runs API/web without provisioning bot computers.
@@ -181,6 +218,7 @@ Set `SANDBOX_PROVIDER` to exactly one of:
 | `boxd` | `BOXD_API_KEY` | Optional `BOXD_ORG` to create computers in a boxd organization |
 | `createos` | `CREATEOS_SANDBOX_API_KEY` | Optional `CREATEOS_SANDBOX_BASE_URL`, `CREATEOS_SANDBOX_SHAPE`, `CREATEOS_SANDBOX_ROOTFS` |
 | `railway` | `RAILWAY_API_TOKEN` and `RAILWAY_ENVIRONMENT_ID` | Optional `RAILWAY_SANDBOX_REGION`; `RAILWAY_MAX_WORKSPACE_FILE_BYTES` (default 64 MiB) caps each workspace file Rakazo reads or saves. Railway supplies the environment ID when Rakazo runs there; see the [Railway template](../infra/railway/README.md) |
+| `wuying` | `WUYING_*` (below) | One existing Wuying cloud computer (Windows) |
 
 Remote paths still need a working API/worker; they do not replace Postgres or
 the web UI. They require egress to the provider. For air-gapped hosts prefer
