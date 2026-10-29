@@ -171,6 +171,10 @@ msgstr "{commandVariable} 是保留名称，不能用作命令变量。请选择
 msgid "{connectedCount, plural, one {# connected} other {# connected}}"
 msgstr "{connectedCount, plural, one {# 个已连接} other {# 个已连接}}"
 
+#: src/pages/shell/message-view.tsx
+msgid "{count, plural, one {# message with {peer}} other {# messages with {peer}}}"
+msgstr "{count, plural, other {与 {peer} 的 # 条消息}}"
+
 #: src/components/markdown-copy.tsx
 msgid "{count, plural, one {# row} other {# rows}}"
 msgstr "{count, plural, one {# 行} other {# 行}}"
@@ -1342,7 +1346,6 @@ msgstr "正在清空…"
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/ModelSettingsOverlay.tsx
-#: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
 #: src/pages/WindowChrome.tsx
@@ -1352,6 +1355,10 @@ msgstr "关闭"
 #: src/pages/shell/message-cards.tsx
 msgid "Close chart"
 msgstr "关闭图表"
+
+#: src/pages/PeerMessagesOverlay.tsx
+msgid "Close Chat"
+msgstr "关闭聊天"
 
 #: src/pages/shell/computer-overlay.tsx
 msgid "Close computer"
@@ -1427,10 +1434,6 @@ msgstr "验证码"
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Collapse {0}"
 msgstr "折叠 {0}"
-
-#: src/pages/shell/message-view.tsx
-msgid "Collapse {label}"
-msgstr "折叠 {label}"
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Color"
@@ -2819,10 +2822,6 @@ msgstr "展开"
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Expand {0}"
 msgstr "展开 {0}"
-
-#: src/pages/shell/message-view.tsx
-msgid "Expand {label}"
-msgstr "展开 {label}"
 
 #: src/components/markdown-copy.tsx
 msgid "Expand table"
@@ -5790,10 +5789,6 @@ msgstr "此操作无法撤销。"
 #: src/pages/shell/dialogs.tsx
 msgid "This cannot be undone."
 msgstr "此操作无法撤销。"
-
-#: src/pages/PeerMessagesOverlay.tsx
-msgid "This chat is view-only"
-msgstr "此对话为只读"
 
 #: src/pages/HostComputerPrompt.tsx
 msgid "this computer"

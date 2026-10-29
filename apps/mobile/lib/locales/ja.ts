@@ -1,4 +1,5 @@
 export const JA_MESSAGES: Record<string, string> = {
+  "Close Chat": "チャットを閉じる",
   "How other bots see it": "他のボットからの見え方",
   "Share to": "共有先",
   "{count} files": "{count}個のファイル",
@@ -1247,3 +1248,5 @@ export const JA_MESSAGES: Record<string, string> = {
   "{count} free months earned": "{count}か月分の無料期間を獲得",
   "Submit a plugin": "プラグインを申請",
 };
+
+export const PEER_MESSAGE_FORMS = { other: "{peer}とのメッセージ{count}件" };

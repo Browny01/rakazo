@@ -57,6 +57,8 @@ export const RU_MESSAGES: Record<string, string> = {
   Next: "Далее",
   "Ex: Project Falcon": "Например: проект «Сокол»",
   "Search bots": "Поиск ботов",
+  "Close Chat": "Закрыть чат",
+  "{count} messages with {peer}": "{count} сообщения с {peer}",
   "About {label}": "О настройке «{label}»",
   "Manage the bots it creates": "Управлять созданными им ботами",
   "Allow cross-space bot communication": "Разрешить общение ботов из разных пространств",
@@ -1253,4 +1255,11 @@ export const RU_MESSAGES: Record<string, string> = {
   "1 free month earned": "Получен 1 бесплатный месяц",
   "{count} free months earned": "Бесплатных месяцев получено: {count}",
   "Submit a plugin": "Предложить плагин",
+};
+
+export const PEER_MESSAGE_FORMS: Partial<Record<Intl.LDMLPluralRule, string>> = {
+  one: "{count} сообщение с {peer}",
+  few: "{count} сообщения с {peer}",
+  many: "{count} сообщений с {peer}",
+  other: RU_MESSAGES["{count} messages with {peer}"],
 };

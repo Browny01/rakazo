@@ -1,4 +1,5 @@
 export const ZH_TW_MESSAGES: Record<string, string> = {
+  "Close Chat": "關閉聊天",
   "How other bots see it": "其他機器人如何瞭解它",
   "Share to": "分享到",
   "{count} files": "{count} 個檔案",
@@ -1229,3 +1230,5 @@ export const ZH_TW_MESSAGES: Record<string, string> = {
   "{count} free months earned": "已獲得 {count} 個月免費",
   "Submit a plugin": "提交外掛程式",
 };
+
+export const PEER_MESSAGE_FORMS = { other: "與{peer}的 {count} 則訊息" };

@@ -60,6 +60,8 @@ export const DE_MESSAGES: Record<string, string> = {
   Next: "Weiter",
   "Ex: Project Falcon": "Z. B. Projekt Falcon",
   "Search bots": "Bots suchen",
+  "Close Chat": "Chat schließen",
+  "{count} messages with {peer}": "{count} Nachrichten mit {peer}",
   "About {label}": "Über {label}",
   "Manage the bots it creates": "Die von ihm erstellten Bots verwalten",
   "Allow cross-space bot communication":
@@ -1222,4 +1224,9 @@ export const DE_MESSAGES: Record<string, string> = {
   "1 free month earned": "1 Gratismonat verdient",
   "{count} free months earned": "{count} Gratismonate verdient",
   "Submit a plugin": "Plugin einreichen",
+};
+
+export const PEER_MESSAGE_FORMS: Partial<Record<Intl.LDMLPluralRule, string>> = {
+  other: DE_MESSAGES["{count} messages with {peer}"],
+  one: "{count} Nachricht mit {peer}",
 };
