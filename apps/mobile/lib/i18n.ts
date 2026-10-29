@@ -52,15 +52,6 @@ export function useI18n(): { locale: UiLocale; t: typeof t } {
   return { locale, t };
 }
 
-function readDeviceLanguage(): string | null {
-  try {
-    const IntlRef = globalThis.Intl;
-    return IntlRef?.DateTimeFormat().resolvedOptions().locale || null;
-  } catch {
-    return null;
-  }
-}
-
 export function activateUiLocale(locale: UiLocale): UiLocale {
   activeLocale = locale;
   emit();
@@ -78,9 +69,26 @@ async function applyDirection(locale: UiLocale): Promise<void> {
   }
 }
 
+/** The device's preferred language (`es-CL`), from Expo where it loads, else from Intl. */
+export async function deviceLanguage(): Promise<string | null> {
+  // Lazy: nearly every module imports i18n, including ones evaluated without native modules.
+  try {
+    const localization = await import("expo-localization");
+    const tag = localization.getLocales()[0]?.languageTag;
+    if (typeof tag === "string" && tag) return tag;
+  } catch {
+    // Keep Intl fallback.
+  }
+  try {
+    const IntlRef = globalThis.Intl;
+    return IntlRef?.DateTimeFormat().resolvedOptions().locale || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function bootstrapI18n(): Promise<UiLocale> {
   let stored: string | null = null;
-  let deviceLanguage: string | null = readDeviceLanguage();
   // Lazy: nearly every module imports i18n, including ones evaluated without native modules.
   try {
     const SecureStore = await import("expo-secure-store");
@@ -88,18 +96,11 @@ export async function bootstrapI18n(): Promise<UiLocale> {
   } catch {
     stored = null;
   }
-  try {
-    const localization = await import("expo-localization");
-    const tag = localization.getLocales()[0]?.languageTag;
-    if (typeof tag === "string" && tag) deviceLanguage = tag;
-  } catch {
-    // Keep Intl fallback.
-  }
   const envDefault =
     typeof process !== "undefined" && typeof process.env.EXPO_PUBLIC_DEFAULT_UI_LOCALE === "string"
       ? process.env.EXPO_PUBLIC_DEFAULT_UI_LOCALE
       : null;
-  const locale = resolveUiLocale({ stored, envDefault, deviceLanguage });
+  const locale = resolveUiLocale({ stored, envDefault, deviceLanguage: await deviceLanguage() });
   activateUiLocale(locale);
   await applyDirection(locale);
   return locale;

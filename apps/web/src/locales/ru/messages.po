@@ -525,6 +525,10 @@ msgstr "Добавьте команду stdio."
 msgid "Add a trigger to run this routine."
 msgstr "Добавьте триггер для запуска этой процедуры."
 
+#: src/lib/tts.ts
+msgid "Add a voice provider key and pick a voice in Voice settings."
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Add an HTTPS server URL."
 msgstr "Добавьте URL-адрес HTTPS-сервера."
@@ -677,6 +681,10 @@ msgstr ""
 #: src/components/AskCard.tsx
 msgid "Allow once"
 msgstr "Разрешить один раз"
+
+#: src/lib/dictation.ts
+msgid "Allow Rakazo to use Speech Recognition and the microphone in System Settings."
+msgstr ""
 
 #: src/components/ApprovalRulePreview.tsx
 msgid "Allow rule"
@@ -2204,6 +2212,10 @@ msgstr "Не смог взять под контроль"
 msgid "Could not test MCP server"
 msgstr "Не удалось проверить MCP-сервер"
 
+#: src/lib/dictation.ts
+msgid "Could not transcribe that recording."
+msgstr ""
+
 #: src/pages/ScratchpadSection.tsx
 msgid "Could not update"
 msgstr "Не удалось обновить"
@@ -2520,6 +2532,18 @@ msgstr "Подробности"
 msgid "Developer"
 msgstr ""
 
+#: src/lib/dictation.ts
+msgid "Dictation ended unexpectedly."
+msgstr ""
+
+#: src/lib/dictation.ts
+msgid "Dictation failed: {code}"
+msgstr ""
+
+#: src/lib/dictation.ts
+msgid "Dictation failed."
+msgstr ""
+
 #: src/pages/shell/bot-panel.tsx
 msgid "Disable a tool"
 msgstr "Отключить инструмент"
@@ -2769,6 +2793,10 @@ msgstr "Каждую неделю: {0} и {1}"
 #: src/pages/RoutineSchedule.tsx
 msgid "every {intervalAmountSelect} {intervalUnitSelect}"
 msgstr "каждые {intervalAmountSelect} {intervalUnitSelect}"
+
+#: src/lib/cron.ts
+msgid "Every {n} hours at :{minute}"
+msgstr "Раз в {n} ч, на {minute}-й минуте"
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Every bot in this space reads these notes and keeps them up to date."
@@ -3678,6 +3706,7 @@ msgid "Messaging"
 msgstr "Обмен сообщениями"
 
 #: src/lib/call-session.ts
+#: src/lib/dictation.ts
 msgid "Microphone failed"
 msgstr "Ошибка микрофона"
 
@@ -5700,6 +5729,10 @@ msgstr "Проверка…"
 msgid "The bot can use the file but won't see the picture."
 msgstr "Бот сможет использовать файл, но не увидит изображение."
 
+#: src/lib/dictation.ts
+msgid "The browser keeps dropping the microphone. Start dictation again to retry."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "Время ожидания соединения истекло."
@@ -5782,6 +5815,14 @@ msgstr "Этот бот"
 #: src/pages/shell/computer-view.tsx
 msgid "This bot runs on this computer, not a Linux desktop. Shell and files use your home folder."
 msgstr "Этот бот работает на этом компьютере, а не на рабочем столе Linux. Оболочка и файлы используют вашу домашнюю папку."
+
+#: src/lib/dictation.ts
+msgid "This browser can't detect when you stop talking. Use Chrome, the desktop app, or hold-to-talk in the composer."
+msgstr ""
+
+#: src/lib/dictation.ts
+msgid "This browser has no on-device dictation. Connect a voice provider with transcription, or use Chrome / the desktop app."
+msgstr ""
 
 #: src/components/call/IncomingCall.tsx
 msgid "This call is no longer ringing."
@@ -5968,6 +6009,14 @@ msgstr "Расшифровка"
 
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Transcription model"
+msgstr ""
+
+#: src/lib/dictation.ts
+msgid "Transcription request timed out."
+msgstr ""
+
+#: src/lib/dictation.ts
+msgid "Transcription response is too large."
 msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
@@ -6244,6 +6293,10 @@ msgstr ""
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Voice"
 msgstr "Голос"
+
+#: src/lib/tts.ts
+msgid "Voice request timed out."
+msgstr ""
 
 #: src/lib/model-connection-preflight.ts
 msgid "Wait a moment and test again."
