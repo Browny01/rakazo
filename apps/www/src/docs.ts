@@ -8,6 +8,7 @@ export const DOCS_NAV = [
       { slug: "bot-secrets", label: "Reusable credentials" },
       { slug: "fleet-management", label: "Bots that manage bots" },
       { slug: "import-an-agent", label: "Import an agent" },
+      { slug: "build-a-plugin", label: "Build a plugin" },
     ],
   },
   {
