@@ -757,6 +757,7 @@ model Thread {
   routines                    Routine[]
 
   @@index([spaceId])
+  @@index([spaceId, userId])
   @@map("threads")
 }
 
