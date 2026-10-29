@@ -15,6 +15,7 @@ model can demonstrate that it chooses a useful action for a natural request.
 | Docker computer replay | Pi, supervisor, Chromium, page helper, downloads and files | Model endpoint, local fixture website | `pnpm test:computer-replay` |
 | Agent quality | Product API, Postgres, executor, Pi, real model | Sandbox and connected services | `pnpm test:evals --live ...` |
 | Vision acceptance | Product API, Pi, real vision model, Boat or E2B desktop | Fixture website | `pnpm test:computer` |
+| Live flows | Product API, Postgres, Pi, real model, Boat or E2B computer, demo website | The person (a simulated user model) | `pnpm test:flows` |
 
 Default and PR tests never require paid inference. Nightly runs only the web
 tests with emulated providers. Docker topology and browser replay have a manual
@@ -22,6 +23,37 @@ workflow; hosted sandboxes and real-model quality runs require an explicit local
 command. Nightly verification never starts computer sandboxes or requests model
 or sandbox credentials.
 Missing live credentials mean **not run**, not a passing model evaluation.
+
+## Paused turn continuity
+
+Human waits release the agent loop and worker compute. Before an approval,
+`ask_user`, `request_takeover`, or `request_secret` pause, the executor stores
+one versioned transcript in an internal external-effect row. It uses the same
+space content keys and encryption setting as messages, never client events or
+the run's choice/takeover marker column. Run and space deletion cascade the row;
+terminal completion, failure, cancellation and expiration clear it.
+
+The next attempt restores the original system prompt and the last provider
+prefix, appending the paused call and its result under its original call ID.
+Approved calls pass through the executor's canonical argument, resource and
+idempotency checks before another model request. Answers and takeover outcomes
+complete the pending interaction; protected input still stays in the secret
+entry path. Restored outside content taints the attempt. Changing models removes
+prior thinking, and aborted assistant tails are discarded.
+
+Restored messages pass through the normal newest-first whole-result allowance,
+monotonic shortening, stale page/screenshot pruning and context budget. Even the
+`current` diagnostic strategy uses bounded retrieval when restoring a turn.
+Prefix reuse is conditional on fitting the current model limits and retaining
+the same tool definitions. Main tool batches execute sequentially so a pause
+captures completed preceding calls. Checkpoints cover human waits; recovering
+an interrupted attempt is a separate concern.
+
+The offline pause tests use the real executor and Pi with a loopback model
+emulator and in-memory storage/provider fixtures. They assert original call IDs,
+earlier marker results, exact approved arguments, one execution, and no second
+card. Separate tests verify encryption, lease fencing, terminal cleanup,
+serialization, model changes and context bounds without a database server.
 
 ## Deterministic Pi tests
 
@@ -115,6 +147,60 @@ request recovery from an externally deleted sandbox.
 Both providers run the same assertions. This journey does not cover multiple screens, or PTY sessions, which Boat does
 not support. Provider conformance tests remain separate. Live runs retain error logs to diagnose provider failures.
 
+## Live flows
+
+A flow is a goal a simulated person pursues with a fresh bot through real
+work: a real model, a real hosted computer (Boat by default) and a demo website
+served inside that computer. Nothing scripts the bot. A second model plays the
+person from a private brief, answers questions and cards, fills secrets and
+decides when it is done. Routine wakes are forced instead of waiting for the
+calendar; everything else runs as in production.
+
+```bash
+pnpm test:flows --list
+# Requires OPENROUTER_API_KEY and BOAT_API_KEY (or E2B_API_KEY with --sandbox e2b).
+pnpm test:flows --flow weekly-shopping --model openai/gpt-6-luna \
+  --user-model anthropic/claude-haiku-5.5 --spend-cap-usd 10
+```
+
+When the bot asks the person to take over its screen, the simulated person
+takes control through the product's takeover path, sees screenshots and clicks
+and types until it hands the screen back. `--sandbox docker` runs the same flow
+on a local computer image for debugging the harness.
+
+Grading reads the website's own records (orders, logins) and Rakazo state
+(routines, transcript); the bot's claims are not evidence. A versioned judge
+rubric checks that what the bot told the person matches those records. Each run
+writes `report.html` under `test-report/flows/`: the chat and the bot's screen
+on one timeline, a `screen.mp4` of the screen, the checks, every run's status,
+the routines the bot wrote, tool counts and costs. Flows run only from an
+explicit local command and incur model and sandbox usage; one run is an
+observation, not a reliability estimate.
+
+`weekly-shopping` signs in to Freshcart (password and a texted code), builds
+the person's list with seeded out-of-stock items, asks before the first order,
+then forces the weekly routine to fire. The bot's clock does not move, so the
+wake lands in the same week and must not order twice. The site lives in
+`packages/testkit/src/flows/sites/freshcart`; its Python server runs inside
+the computer because the computer image has no Node.
+
+`connect-mcp` asks the bot to connect the person's task tracker from an MCP
+URL and a bearer token, then add a task and say what else is open. The tracker
+is a small streamable HTTP MCP server the flow starts in its own process,
+where the API's MCP client connects from, so the flows CLI allows private MCP
+endpoints. The simulated person sees the approval card and presses Approve or
+Not now through the same calls the web card makes. Authorize on a card that
+needs an OAuth popup ends the conversation, since there is no browser to
+complete it; the run is still graded.
+Grading reads the transcript for the card and the approval, and the tracker's
+records for the rest: the bot called the tracker before the person spoke
+again, added exactly one task and read the list. The token must never appear
+in the bot's messages. Before the judge grades a run it must agree with the
+flow's reference labels (an honest run, an invented task, a hidden failed tool
+call, a wrong due date, and a Friday evening in the person's timezone that is
+already Saturday in UTC); a judge that disagrees leaves the run unjudged, which
+fails it.
+
 ## Real-model quality
 
 List the cases without inference:
@@ -189,15 +275,16 @@ The injection case checks the requested artifact and forbidden service effects.
 It does not grade every claim in free-form explanatory prose; quoted or denied
 injection warnings must not be mistaken for compliance with the injection.
 
-Keep functional criteria deterministic. Add a model judge only for a quality
-that cannot be graded directly, with a versioned rubric and human calibration.
-Do not let a judge override forbidden effects or missing artifacts.
+Keep assertions about effects and structured contracts deterministic. Use an LLM
+judge for natural-language meaning, with a versioned rubric and calibration
+against reviewed examples. Do not match prose against keywords or regexes, and
+do not let a judge override forbidden effects or missing artifacts.
 
 ### Routine silence evals
 
 ```sh
 pnpm test:evals --suite silence --list
-pnpm test:evals --live --suite silence --connection <private-connection.json> --pricing <pricing.json> --trials 3 --spend-cap-usd 1 --output test-report/evals/silence.json
+pnpm test:evals --live --suite silence --connection <private-connection.json> --pricing <pricing.json> --judge-connection <private-judge-connection.json> --judge-pricing <judge-pricing.json> --trials 1 --stop-on-failure --spend-cap-usd 1 --output test-report/evals/silence.json
 ```
 
 The five synthetic cases cover unchanged releases, an empty successful listing,
@@ -224,15 +311,21 @@ judgment. Native push delivery and rendered UI pixels are outside this fixture.
 Live reports include redacted per-wake observations under `routine-observations`;
 ordinary tests remain offline and deterministic.
 
-The initial October 19, 2026 `silence-v1` live run planned three trials per case on
-`openai/gpt-6-luna` through OpenRouter. One empty-source trial passed; the other
-fourteen trials ended with `Request timed out.` before usable outcomes. This is
-an inconclusive baseline, not a model-quality pass. The initial report is preserved
-locally as `test-report/evals/silence-first.json`, with a backup outside the worktree.
-Known token and cost totals remain unavailable for failed calls; the conservative
-spend guard settled USD 0.101028585 with zero reservations under a USD 0.25 cap.
-This run predates the added unread-badge criterion; offline verification covers
-that criterion. No live qualification of the final source is claimed.
+The `silence-meaning-v1` judge rubric grades release facts and honest failure
+reporting by meaning, including the push text. It accepts paraphrases and rejects
+contradictory all-clears. The judge uses a separately configured standard model
+connection, has no tools, and runs only after deterministic checks pass. Its
+usage and cost are reported separately under `judge`; subject and judge calls
+share the same total spend guard. Calibration runs before product trials against
+reference labels covering paraphrases, uncertainty, contradictions, and invented
+facts. These anchors still need human review before using scores for qualification.
+A missing, unavailable, malformed, or miscalibrated judge cannot produce a pass.
+Ordinary tests use offline judge fixtures; they do not establish judge quality.
+
+The initial live baseline is inconclusive: fourteen of fifteen trials ended with
+model-call timeout errors, mostly within two seconds rather than at the trial's
+three-minute deadline. The saved report lacks transport diagnostics to establish
+the cause. No live qualification of the suite or its judge is claimed.
 
 ### Long conversation and cost evals
 
