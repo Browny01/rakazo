@@ -9,7 +9,7 @@ import type {
   SandboxStateEnum,
   SavedSnapshot,
 } from "@boatdev/sdk";
-import { BoatApi, Configuration, followCommand } from "@boatdev/sdk";
+import { BoatApi, Configuration, FetchError, followCommand } from "@boatdev/sdk";
 import type {
   AdapterContext,
   CommandRequest,
@@ -701,9 +701,15 @@ export class BoatSandboxProvider implements SandboxProvider {
   async isRunning(computer: ComputerRef, context: AdapterContext): Promise<boolean> {
     if (computer.kind !== "boat") return false;
     try {
+      // Its caller retries an unread status itself, so a rate limit's wait is cut short here.
       const { sandbox } = await this.client.get(
         { sandboxId: this.id(computer) },
-        { signal: context.signal },
+        {
+          signal: AbortSignal.any([
+            context.signal,
+            AbortSignal.timeout(BOAT_GONE_CHECK_TIMEOUT_MS),
+          ]),
+        },
       );
       return RUNNABLE_STATES.has(sandbox.state);
     } catch (error) {
@@ -1278,7 +1284,14 @@ export class BoatSandboxProvider implements SandboxProvider {
         }
       }
     } catch (error) {
-      if (signal?.aborted || !(timeout.aborted || error instanceof BoatApiError)) throw error;
+      // A rate limit, or the SDK's own idle timer ending the attach (on its request, or while it
+      // waits at the request gate), leaves the command to status polls too.
+      const unavailable =
+        timeout.aborted ||
+        error instanceof BoatApiError ||
+        error instanceof SandboxRateLimitError ||
+        isAbortError(error instanceof FetchError ? error.cause : error);
+      if (signal?.aborted || !unavailable) throw error;
     }
     return undefined;
   }
@@ -1467,7 +1480,7 @@ function boatClient(api: BoatSandboxSdk, apiKey: string, gate: BoatRequestGate):
     getSavedSnapshot: boatCall(api.getSavedSnapshot.bind(api), true),
     hostPort: sandboxCall(api.hostPort.bind(api), true),
     recover: startCall("recover", sandboxCall(api.recover.bind(api))),
-    resume: startCall("resume", sandboxCall(api.resume.bind(api))),
+    resume: startCall("resume", sandboxCall(api.resume.bind(api), true)),
     saveSavedSnapshot: boatCall(api.saveSavedSnapshot.bind(api)),
     stop: sandboxCall(api.stop.bind(api)),
     update: sandboxCall(api.update.bind(api), true),
