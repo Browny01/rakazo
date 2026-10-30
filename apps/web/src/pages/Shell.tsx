@@ -65,6 +65,7 @@ import type { AppearancePreference } from "../lib/ui-appearance";
 import { getUiAppearancePreference, setUiAppearance } from "../lib/ui-appearance";
 import { useDesktopBadge } from "../lib/use-desktop-badge";
 import { HostComputerPrompt } from "./HostComputerPrompt";
+import { RoutineList } from "./RoutineEditor";
 import { useSettingsNavItems } from "./settings-nav";
 import { ArchivedChats } from "./shell/archived-chats";
 import { ChatContextMenu } from "./shell/chat-context-menu";
@@ -250,6 +251,9 @@ function SpaceShell() {
   }, [settingsSpaceGone]);
 
   const inGroup = Boolean(groupId);
+  const chatPanelOpen = inGroup
+    ? panel === "group-settings"
+    : panel === "computer" || panel === "routines" || panel === "settings" || panel === "routine";
   // Until the route names the chat reopened from cache, that chat stands in for it.
   const routeChat = botId || groupId ? undefined : startChat;
   const active =
@@ -869,23 +873,23 @@ function SpaceShell() {
             activeSnapshot={activeSnapshot}
             phoneCallsEnabled={Boolean(bootstrapMe?.phoneCallsEnabled)}
             inCall={Boolean(active) && call?.botId === active?.id}
-            computerPanelOpen={panel === "computer"}
+            panelOpen={chatPanelOpen}
             onOpenNavigation={() => setMobileSidebarOpen(true)}
-            onOpenChatSettings={() => setPanel(inGroup ? "group-settings" : "settings")}
+            onTogglePanel={() => {
+              if (chatPanelOpen) setPanel(null);
+              else if (inGroup) setPanel("group-settings");
+              else if (active) {
+                setPanel("computer");
+                // Refresh run/computer so Take control isn't stuck on a stale busyBotName.
+                void refreshThread(active.id).catch(() => undefined);
+              }
+            }}
             onCall={(bot) => {
               if (call?.botId === bot.id) {
                 setCallMinimized(false);
                 return;
               }
               callBot(bot);
-            }}
-            onToggleComputer={(bot) => {
-              const next = panel === "computer" ? null : "computer";
-              setPanel(next);
-              if (next === "computer") {
-                // Refresh run/computer so Take control isn't stuck on a stale busyBotName.
-                void refreshThread(bot.id).catch(() => undefined);
-              }
             }}
           />
           {!active && !activeGroup && initialBotsLoaded ? (
@@ -1080,17 +1084,21 @@ function SpaceShell() {
               onRecoveryDismissed={computerControls.releaseComputerRecovery}
               onOpenComputerSettings={() => openSettings("computer")}
               onOpen={() => void openComputer()}
-              routines={activeRoutines}
-              runningRoutineId={
-                snapshot?.run && isActive(snapshot.run.status)
-                  ? (snapshot.run.routineId ?? undefined)
-                  : undefined
-              }
-              onCreateRoutine={() => startRoutine()}
-              onEditRoutine={startRoutine}
-              onStopRun={() => void stopRun()}
             />
           ) : null
+        }
+        routinesPanel={
+          <RoutineList
+            routines={activeRoutines}
+            runningRoutineId={
+              snapshot?.run && isActive(snapshot.run.status)
+                ? (snapshot.run.routineId ?? undefined)
+                : undefined
+            }
+            onCreate={() => startRoutine()}
+            onEdit={startRoutine}
+            onStop={() => void stopRun()}
+          />
         }
         routineEditorProps={routineEditorProps}
         openBot={openBot}
