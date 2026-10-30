@@ -2749,6 +2749,8 @@ describe("computer replacement", () => {
   it("exposes update availability by sandbox kind", () => {
     expect(computerSupportsUpdate("e2b")).toBe(true);
     expect(computerSupportsUpdate("desktop")).toBe(false);
+    expect(computerSupportsUpdate("wuying")).toBe(false);
+    expect(computerSupportsUpdate("none")).toBe(false);
   });
 
   it("replaces a wedged computer and restores the durable home", async () => {
@@ -3976,6 +3978,7 @@ describe("computer terminal capability", () => {
   it("allows Novita terminals through the product capability gate", () => {
     expect(computerSupportsTerminal("novita")).toBe(true);
     expect(computerSupportsTerminal("unknown")).toBe(false);
+    expect(computerSupportsTerminal("none")).toBe(false);
   });
 });
 
