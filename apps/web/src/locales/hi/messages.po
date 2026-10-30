@@ -809,6 +809,10 @@ msgstr "API कुंजियाँ"
 msgid "Appearance"
 msgstr "रूप"
 
+#: src/pages/Shell.tsx
+msgid "Appearance: {label}"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "लागू करें"
@@ -1459,6 +1463,10 @@ msgstr ""
 msgid "Command"
 msgstr "कमांड"
 
+#: src/pages/shell/command-palette.tsx
+msgid "Command menu"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/VaultSettings.tsx
 msgid "Command variable"
@@ -1586,6 +1594,7 @@ msgid "Connect API key"
 msgstr "API कुंजी कनेक्ट करें"
 
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "ऐप कनेक्ट करें"
 
@@ -2373,6 +2382,7 @@ msgid "Customize bot avatar"
 msgstr "बॉट अवतार अनुकूलित करें"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Dark"
 msgstr "डार्क"
 
@@ -3385,6 +3395,7 @@ msgid "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 msgstr "बॉट्स को MEMORY.md के साथ-साथ अर्थ के आधार पर तथ्य सहेजने और याद करने देता है।"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Light"
 msgstr "लाइट"
 
@@ -3929,6 +3940,7 @@ msgstr "नया बॉट"
 msgid "New group"
 msgstr "नया समूह"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New group chat"
 msgstr "नई ग्रुप चैट"
@@ -3946,6 +3958,7 @@ msgstr "नया खुला-कार्य आइटम"
 msgid "New password"
 msgstr "नया पासवर्ड"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New private space"
 msgstr "नया निजी स्पेस"
@@ -3990,10 +4003,6 @@ msgstr "कोई प्रमाणीकरण नहीं"
 #: src/pages/PluginsOverlay.tsx
 msgid "No authentication"
 msgstr "कोई प्रमाणीकरण नहीं"
-
-#: src/pages/shell/command-palette.tsx
-msgid "No bots"
-msgstr ""
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
@@ -4052,6 +4061,7 @@ msgstr ""
 
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
+#: src/pages/shell/command-palette.tsx
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "कोई परिणाम नहीं"
@@ -5140,7 +5150,7 @@ msgid "Search artifacts…"
 msgstr ""
 
 #: src/pages/shell/command-palette.tsx
-msgid "Search bots and switch conversations"
+msgid "Search bots, actions, and settings"
 msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
@@ -5266,6 +5276,10 @@ msgstr "सर्वर URL"
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Settings"
 msgstr "सेटिंग्स"
+
+#: src/pages/Shell.tsx
+msgid "Settings: {label}"
+msgstr ""
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Settings: General"
@@ -5417,6 +5431,7 @@ msgstr "स्किल {position}"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 #: src/pages/shell/agent-import.tsx
 msgid "Skills"
 msgstr "स्किल्स"
@@ -5650,15 +5665,12 @@ msgstr "सोचने की क्षमता का समर्थन क�
 msgid "Switch"
 msgstr ""
 
-#: src/pages/shell/command-palette.tsx
-msgid "Switch bot"
-msgstr ""
-
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Switching…"
 msgstr "बदला जा रहा है…"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "System"
 msgstr "सिस्टम"
 

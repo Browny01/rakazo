@@ -809,6 +809,10 @@ msgstr "API 密钥"
 msgid "Appearance"
 msgstr "外观"
 
+#: src/pages/Shell.tsx
+msgid "Appearance: {label}"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "应用"
@@ -1459,6 +1463,10 @@ msgstr "即将推出"
 msgid "Command"
 msgstr "命令"
 
+#: src/pages/shell/command-palette.tsx
+msgid "Command menu"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/VaultSettings.tsx
 msgid "Command variable"
@@ -1586,6 +1594,7 @@ msgid "Connect API key"
 msgstr "连接 API 密钥"
 
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "连接应用"
 
@@ -2373,6 +2382,7 @@ msgid "Customize bot avatar"
 msgstr "自定义机器人头像"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Dark"
 msgstr "深色"
 
@@ -3385,6 +3395,7 @@ msgid "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 msgstr "让机器人在 MEMORY.md 之外，按语义保存和回忆事实。"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Light"
 msgstr "浅色"
 
@@ -3929,6 +3940,7 @@ msgstr "新建 Bot"
 msgid "New group"
 msgstr "新建群组"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New group chat"
 msgstr "新建群聊"
@@ -3946,6 +3958,7 @@ msgstr "新的待办"
 msgid "New password"
 msgstr "新密码"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New private space"
 msgstr "新建私人空间"
@@ -3990,10 +4003,6 @@ msgstr "无认证"
 #: src/pages/PluginsOverlay.tsx
 msgid "No authentication"
 msgstr "无认证"
-
-#: src/pages/shell/command-palette.tsx
-msgid "No bots"
-msgstr "没有 Bot"
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
@@ -4052,6 +4061,7 @@ msgstr "没有找到远程 MCP 服务器"
 
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
+#: src/pages/shell/command-palette.tsx
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "无结果"
@@ -5140,8 +5150,8 @@ msgid "Search artifacts…"
 msgstr "搜索产物…"
 
 #: src/pages/shell/command-palette.tsx
-msgid "Search bots and switch conversations"
-msgstr "搜索 Bot 并切换对话"
+msgid "Search bots, actions, and settings"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Search by domain"
@@ -5266,6 +5276,10 @@ msgstr "服务器 URL"
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Settings"
 msgstr "设置"
+
+#: src/pages/Shell.tsx
+msgid "Settings: {label}"
+msgstr ""
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Settings: General"
@@ -5417,6 +5431,7 @@ msgstr "技能 {position}"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 #: src/pages/shell/agent-import.tsx
 msgid "Skills"
 msgstr "技能"
@@ -5650,15 +5665,12 @@ msgstr "支持思考"
 msgid "Switch"
 msgstr "切换"
 
-#: src/pages/shell/command-palette.tsx
-msgid "Switch bot"
-msgstr "切换 Bot"
-
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Switching…"
 msgstr "正在切换…"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "System"
 msgstr "系统"
 

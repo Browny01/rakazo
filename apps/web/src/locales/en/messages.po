@@ -809,6 +809,10 @@ msgstr "API keys"
 msgid "Appearance"
 msgstr "Appearance"
 
+#: src/pages/Shell.tsx
+msgid "Appearance: {label}"
+msgstr "Appearance: {label}"
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "Apply"
@@ -1459,6 +1463,10 @@ msgstr "Coming soon"
 msgid "Command"
 msgstr "Command"
 
+#: src/pages/shell/command-palette.tsx
+msgid "Command menu"
+msgstr "Command menu"
+
 #: src/components/AskCard.tsx
 #: src/components/VaultSettings.tsx
 msgid "Command variable"
@@ -1586,6 +1594,7 @@ msgid "Connect API key"
 msgstr "Connect API key"
 
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "Connect apps"
 
@@ -2373,6 +2382,7 @@ msgid "Customize bot avatar"
 msgstr "Customize bot avatar"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Dark"
 msgstr "Dark"
 
@@ -3385,6 +3395,7 @@ msgid "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 msgstr "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Light"
 msgstr "Light"
 
@@ -3929,6 +3940,7 @@ msgstr "New bot"
 msgid "New group"
 msgstr "New group"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New group chat"
 msgstr "New group chat"
@@ -3946,6 +3958,7 @@ msgstr "New open-work item"
 msgid "New password"
 msgstr "New password"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New private space"
 msgstr "New private space"
@@ -3990,10 +4003,6 @@ msgstr "No auth"
 #: src/pages/PluginsOverlay.tsx
 msgid "No authentication"
 msgstr "No authentication"
-
-#: src/pages/shell/command-palette.tsx
-msgid "No bots"
-msgstr "No bots"
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
@@ -4052,6 +4061,7 @@ msgstr "No remote MCP servers found"
 
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
+#: src/pages/shell/command-palette.tsx
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "No results"
@@ -5140,8 +5150,8 @@ msgid "Search artifacts…"
 msgstr "Search artifacts…"
 
 #: src/pages/shell/command-palette.tsx
-msgid "Search bots and switch conversations"
-msgstr "Search bots and switch conversations"
+msgid "Search bots, actions, and settings"
+msgstr "Search bots, actions, and settings"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Search by domain"
@@ -5266,6 +5276,10 @@ msgstr "Server URL"
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Settings"
 msgstr "Settings"
+
+#: src/pages/Shell.tsx
+msgid "Settings: {label}"
+msgstr "Settings: {label}"
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Settings: General"
@@ -5417,6 +5431,7 @@ msgstr "Skill {position}"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 #: src/pages/shell/agent-import.tsx
 msgid "Skills"
 msgstr "Skills"
@@ -5650,15 +5665,12 @@ msgstr "Supports thinking"
 msgid "Switch"
 msgstr "Switch"
 
-#: src/pages/shell/command-palette.tsx
-msgid "Switch bot"
-msgstr "Switch bot"
-
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Switching…"
 msgstr "Switching…"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "System"
 msgstr "System"
 

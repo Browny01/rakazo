@@ -809,6 +809,10 @@ msgstr "API-Schlüssel"
 msgid "Appearance"
 msgstr "Erscheinungsbild"
 
+#: src/pages/Shell.tsx
+msgid "Appearance: {label}"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "Anwenden"
@@ -1459,6 +1463,10 @@ msgstr ""
 msgid "Command"
 msgstr "Befehl"
 
+#: src/pages/shell/command-palette.tsx
+msgid "Command menu"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/VaultSettings.tsx
 msgid "Command variable"
@@ -1586,6 +1594,7 @@ msgid "Connect API key"
 msgstr "API-Schlüssel verbinden"
 
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "Apps verbinden"
 
@@ -2373,6 +2382,7 @@ msgid "Customize bot avatar"
 msgstr "Bot-Avatar anpassen"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Dark"
 msgstr "Dunkel"
 
@@ -3385,6 +3395,7 @@ msgid "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 msgstr "Bots können Fakten nach Bedeutung speichern und abrufen, zusätzlich zu MEMORY.md."
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Light"
 msgstr "Hell"
 
@@ -3929,6 +3940,7 @@ msgstr "Neuer Bot"
 msgid "New group"
 msgstr "Neue Gruppe"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New group chat"
 msgstr "Neuer Gruppenchat"
@@ -3946,6 +3958,7 @@ msgstr "Neuer offener Arbeitspunkt"
 msgid "New password"
 msgstr "Neues Passwort"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New private space"
 msgstr "Neuer privater Space"
@@ -3990,10 +4003,6 @@ msgstr "Keine Authentifizierung"
 #: src/pages/PluginsOverlay.tsx
 msgid "No authentication"
 msgstr "Keine Authentifizierung"
-
-#: src/pages/shell/command-palette.tsx
-msgid "No bots"
-msgstr ""
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
@@ -4052,6 +4061,7 @@ msgstr ""
 
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
+#: src/pages/shell/command-palette.tsx
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "Keine Ergebnisse"
@@ -5140,7 +5150,7 @@ msgid "Search artifacts…"
 msgstr ""
 
 #: src/pages/shell/command-palette.tsx
-msgid "Search bots and switch conversations"
+msgid "Search bots, actions, and settings"
 msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
@@ -5266,6 +5276,10 @@ msgstr "Server-URL"
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Settings"
 msgstr "Einstellungen"
+
+#: src/pages/Shell.tsx
+msgid "Settings: {label}"
+msgstr ""
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Settings: General"
@@ -5417,6 +5431,7 @@ msgstr "Skill {position}"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 #: src/pages/shell/agent-import.tsx
 msgid "Skills"
 msgstr "Skills"
@@ -5650,15 +5665,12 @@ msgstr "Unterstützt Denkmodus"
 msgid "Switch"
 msgstr ""
 
-#: src/pages/shell/command-palette.tsx
-msgid "Switch bot"
-msgstr ""
-
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Switching…"
 msgstr "Wird gewechselt…"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "System"
 msgstr "System"
 

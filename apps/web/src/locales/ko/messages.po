@@ -809,6 +809,10 @@ msgstr "API 키"
 msgid "Appearance"
 msgstr "모양"
 
+#: src/pages/Shell.tsx
+msgid "Appearance: {label}"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "적용"
@@ -1459,6 +1463,10 @@ msgstr "준비 중"
 msgid "Command"
 msgstr "실행 명령"
 
+#: src/pages/shell/command-palette.tsx
+msgid "Command menu"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/VaultSettings.tsx
 msgid "Command variable"
@@ -1586,6 +1594,7 @@ msgid "Connect API key"
 msgstr "API 키 연결"
 
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "앱 연결"
 
@@ -2373,6 +2382,7 @@ msgid "Customize bot avatar"
 msgstr "봇 아바타 맞춤설정"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Dark"
 msgstr "다크"
 
@@ -3385,6 +3395,7 @@ msgid "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 msgstr "MEMORY.md와 함께 봇이 의미를 기준으로 사실을 저장하고 떠올릴 수 있게 합니다."
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Light"
 msgstr "라이트"
 
@@ -3929,6 +3940,7 @@ msgstr "새 Bot 만들기"
 msgid "New group"
 msgstr "새 그룹 만들기"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New group chat"
 msgstr "새 그룹 채팅"
@@ -3946,6 +3958,7 @@ msgstr "새 진행 작업"
 msgid "New password"
 msgstr "새 비밀번호"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New private space"
 msgstr "새 비공개 스페이스"
@@ -3990,10 +4003,6 @@ msgstr "인증 없음"
 #: src/pages/PluginsOverlay.tsx
 msgid "No authentication"
 msgstr "인증 없음"
-
-#: src/pages/shell/command-palette.tsx
-msgid "No bots"
-msgstr ""
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
@@ -4052,6 +4061,7 @@ msgstr ""
 
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
+#: src/pages/shell/command-palette.tsx
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "검색 결과가 없습니다"
@@ -5140,7 +5150,7 @@ msgid "Search artifacts…"
 msgstr ""
 
 #: src/pages/shell/command-palette.tsx
-msgid "Search bots and switch conversations"
+msgid "Search bots, actions, and settings"
 msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
@@ -5266,6 +5276,10 @@ msgstr "서버 URL"
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Settings"
 msgstr "설정"
+
+#: src/pages/Shell.tsx
+msgid "Settings: {label}"
+msgstr ""
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Settings: General"
@@ -5417,6 +5431,7 @@ msgstr "스킬 {position}"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 #: src/pages/shell/agent-import.tsx
 msgid "Skills"
 msgstr "스킬"
@@ -5650,15 +5665,12 @@ msgstr "사고 모드 지원"
 msgid "Switch"
 msgstr ""
 
-#: src/pages/shell/command-palette.tsx
-msgid "Switch bot"
-msgstr ""
-
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Switching…"
 msgstr "전환 중…"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "System"
 msgstr "시스템"
 

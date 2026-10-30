@@ -809,6 +809,10 @@ msgstr "מפתחות API"
 msgid "Appearance"
 msgstr "מראה"
 
+#: src/pages/Shell.tsx
+msgid "Appearance: {label}"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "החלה"
@@ -1459,6 +1463,10 @@ msgstr "בקרוב"
 msgid "Command"
 msgstr "פקודה"
 
+#: src/pages/shell/command-palette.tsx
+msgid "Command menu"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/VaultSettings.tsx
 msgid "Command variable"
@@ -1586,6 +1594,7 @@ msgid "Connect API key"
 msgstr "חיבור מפתח API"
 
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "חיבור אפליקציות"
 
@@ -2373,6 +2382,7 @@ msgid "Customize bot avatar"
 msgstr "התאמת תמונת הבוט"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Dark"
 msgstr "כהה"
 
@@ -3385,6 +3395,7 @@ msgid "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 msgstr "מאפשר לבוטים לשמור ולשלוף עובדות לפי משמעות, לצד MEMORY.md."
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Light"
 msgstr "בהיר"
 
@@ -3929,6 +3940,7 @@ msgstr "בוט חדש"
 msgid "New group"
 msgstr "קבוצה חדשה"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New group chat"
 msgstr "צ'אט קבוצתי חדש"
@@ -3946,6 +3958,7 @@ msgstr "פריט עבודה פתוחה חדש"
 msgid "New password"
 msgstr "סיסמה חדשה"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New private space"
 msgstr "מרחב פרטי חדש"
@@ -3990,10 +4003,6 @@ msgstr "ללא אימות"
 #: src/pages/PluginsOverlay.tsx
 msgid "No authentication"
 msgstr "ללא אימות"
-
-#: src/pages/shell/command-palette.tsx
-msgid "No bots"
-msgstr "אין בוטים"
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
@@ -4052,6 +4061,7 @@ msgstr "לא נמצאו שרתי MCP מרוחקים"
 
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
+#: src/pages/shell/command-palette.tsx
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "אין תוצאות"
@@ -5140,8 +5150,8 @@ msgid "Search artifacts…"
 msgstr "חיפוש תוצרים…"
 
 #: src/pages/shell/command-palette.tsx
-msgid "Search bots and switch conversations"
-msgstr "חיפוש בוטים ומעבר בין שיחות"
+msgid "Search bots, actions, and settings"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Search by domain"
@@ -5266,6 +5276,10 @@ msgstr "URL של השרת"
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Settings"
 msgstr "הגדרות"
+
+#: src/pages/Shell.tsx
+msgid "Settings: {label}"
+msgstr ""
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Settings: General"
@@ -5417,6 +5431,7 @@ msgstr "מיומנות {position}"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 #: src/pages/shell/agent-import.tsx
 msgid "Skills"
 msgstr "מיומנויות"
@@ -5650,15 +5665,12 @@ msgstr "תומך בחשיבה"
 msgid "Switch"
 msgstr ""
 
-#: src/pages/shell/command-palette.tsx
-msgid "Switch bot"
-msgstr "החלפת בוט"
-
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Switching…"
 msgstr "מחליף…"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "System"
 msgstr "מערכת"
 

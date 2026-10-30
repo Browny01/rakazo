@@ -809,6 +809,10 @@ msgstr "APIキー"
 msgid "Appearance"
 msgstr "外観"
 
+#: src/pages/Shell.tsx
+msgid "Appearance: {label}"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "適用"
@@ -1459,6 +1463,10 @@ msgstr "近日公開"
 msgid "Command"
 msgstr "コマンド"
 
+#: src/pages/shell/command-palette.tsx
+msgid "Command menu"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/VaultSettings.tsx
 msgid "Command variable"
@@ -1586,6 +1594,7 @@ msgid "Connect API key"
 msgstr "APIキーを接続"
 
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "アプリを接続"
 
@@ -2373,6 +2382,7 @@ msgid "Customize bot avatar"
 msgstr "ボットのアバターをカスタマイズ"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Dark"
 msgstr "ダーク"
 
@@ -3385,6 +3395,7 @@ msgid "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 msgstr "MEMORY.md に加えて、ボットが意味に基づいて事実を保存・想起できるようにします。"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Light"
 msgstr "ライト"
 
@@ -3929,6 +3940,7 @@ msgstr "新しいボット"
 msgid "New group"
 msgstr "新しいグループ"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New group chat"
 msgstr "新しいグループチャット"
@@ -3946,6 +3958,7 @@ msgstr "新しい未完了の作業"
 msgid "New password"
 msgstr "新しいパスワード"
 
+#: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "New private space"
 msgstr "新しいプライベートスペース"
@@ -3990,10 +4003,6 @@ msgstr "認証なし"
 #: src/pages/PluginsOverlay.tsx
 msgid "No authentication"
 msgstr "認証なし"
-
-#: src/pages/shell/command-palette.tsx
-msgid "No bots"
-msgstr "ボットなし"
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
@@ -4052,6 +4061,7 @@ msgstr "リモートMCPサーバーが見つかりません"
 
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
+#: src/pages/shell/command-palette.tsx
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "結果なし"
@@ -5140,8 +5150,8 @@ msgid "Search artifacts…"
 msgstr "アーティファクトを検索…"
 
 #: src/pages/shell/command-palette.tsx
-msgid "Search bots and switch conversations"
-msgstr "ボットを検索して会話を切り替え"
+msgid "Search bots, actions, and settings"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Search by domain"
@@ -5266,6 +5276,10 @@ msgstr "サーバーURL"
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Settings"
 msgstr "設定"
+
+#: src/pages/Shell.tsx
+msgid "Settings: {label}"
+msgstr ""
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Settings: General"
@@ -5417,6 +5431,7 @@ msgstr "スキル {position}"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/SidebarFooter.tsx
+#: src/pages/Shell.tsx
 #: src/pages/shell/agent-import.tsx
 msgid "Skills"
 msgstr "スキル"
@@ -5650,15 +5665,12 @@ msgstr "思考に対応"
 msgid "Switch"
 msgstr "切り替え"
 
-#: src/pages/shell/command-palette.tsx
-msgid "Switch bot"
-msgstr "ボットを切り替え"
-
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Switching…"
 msgstr "切り替え中…"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "System"
 msgstr "システム"
 
