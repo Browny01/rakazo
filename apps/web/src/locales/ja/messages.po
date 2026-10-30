@@ -1498,6 +1498,10 @@ msgstr "コンピューター"
 msgid "Computer failed to boot"
 msgstr "コンピューターの起動に失敗しました"
 
+#: src/components/ModelCredits.tsx
+msgid "Computer hours left"
+msgstr "コンピューターの残り時間"
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Computer is asleep"
 msgstr "コンピューターはスリープ中です"

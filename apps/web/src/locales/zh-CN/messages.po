@@ -1498,6 +1498,10 @@ msgstr "电脑"
 msgid "Computer failed to boot"
 msgstr "电脑启动失败"
 
+#: src/components/ModelCredits.tsx
+msgid "Computer hours left"
+msgstr "剩余电脑时长"
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Computer is asleep"
 msgstr "电脑已休眠"

@@ -1498,6 +1498,10 @@ msgstr "Bilgisayar"
 msgid "Computer failed to boot"
 msgstr "Bilgisayar başlatılamadı"
 
+#: src/components/ModelCredits.tsx
+msgid "Computer hours left"
+msgstr "Kalan bilgisayar saati"
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Computer is asleep"
 msgstr "Bilgisayar uykuda"

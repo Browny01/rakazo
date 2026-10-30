@@ -1498,6 +1498,10 @@ msgstr "Ordinateur"
 msgid "Computer failed to boot"
 msgstr "Échec du démarrage de l'ordinateur"
 
+#: src/components/ModelCredits.tsx
+msgid "Computer hours left"
+msgstr "Heures d'ordinateur restantes"
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Computer is asleep"
 msgstr "L'ordinateur est en veille"

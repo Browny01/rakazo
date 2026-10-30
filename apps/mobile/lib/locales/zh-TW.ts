@@ -970,6 +970,7 @@ export const ZH_TW_MESSAGES: Record<string, string> = {
   "Could not update billing": "無法更新帳務資訊",
   Credits: "額度",
   "Available credits": "可用額度",
+  "Computer hours left": "剩餘電腦時數",
   "Monthly credits": "每月額度",
   "Upgrade now": "立即升級",
   "Downgrade at renewal": "下次續訂時降級",

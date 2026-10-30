@@ -1498,6 +1498,10 @@ msgstr "कंप्यूटर"
 msgid "Computer failed to boot"
 msgstr "कंप्यूटर शुरू नहीं हो सका"
 
+#: src/components/ModelCredits.tsx
+msgid "Computer hours left"
+msgstr "कंप्यूटर के बचे घंटे"
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Computer is asleep"
 msgstr "कंप्यूटर निष्क्रिय है"

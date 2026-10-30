@@ -1498,6 +1498,10 @@ msgstr "Computer"
 msgid "Computer failed to boot"
 msgstr "Computer failed to boot"
 
+#: src/components/ModelCredits.tsx
+msgid "Computer hours left"
+msgstr "Computer hours left"
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Computer is asleep"
 msgstr "Computer is asleep"

@@ -989,6 +989,7 @@ export const DE_MESSAGES: Record<string, string> = {
   "Could not update billing": "Abrechnung konnte nicht aktualisiert werden",
   Credits: "Guthaben",
   "Available credits": "Verfügbares Guthaben",
+  "Computer hours left": "Verbleibende Computerstunden",
   "Monthly credits": "Monatliches Guthaben",
   "Upgrade now": "Jetzt upgraden",
   "Downgrade at renewal": "Bei Verlängerung downgraden",

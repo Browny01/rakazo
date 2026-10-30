@@ -1498,6 +1498,10 @@ msgstr "컴퓨터"
 msgid "Computer failed to boot"
 msgstr "컴퓨터를 시작하지 못했습니다"
 
+#: src/components/ModelCredits.tsx
+msgid "Computer hours left"
+msgstr "남은 컴퓨터 시간"
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Computer is asleep"
 msgstr "컴퓨터가 절전 상태입니다"
