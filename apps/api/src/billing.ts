@@ -48,6 +48,7 @@ export type BillingClient = "mobile" | undefined;
 /** Product-side billing: access rules, checkout, and pull-based sync from the provider. */
 export interface BillingService {
   readonly modelCreditsEnabled: boolean;
+  readonly referralsEnabled: boolean;
   status(actor: Actor): Promise<BillingStatus>;
   selectFunding(
     actor: Actor,
@@ -267,6 +268,7 @@ export function createBillingService(deps: {
 
   return {
     modelCreditsEnabled: modelCredits,
+    referralsEnabled: referrals.enabled,
     async selectFunding(actor, funding, client) {
       const { organizationId } = await managedOrganization(actor);
       const account = await creditAccount(prisma, organizationId);
