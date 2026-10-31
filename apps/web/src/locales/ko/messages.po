@@ -877,6 +877,10 @@ msgstr ""
 msgid "Ask"
 msgstr "묻기"
 
+#: src/pages/shell/computer-panel.tsx
+msgid "Asleep"
+msgstr "절전 중"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -6302,6 +6306,10 @@ msgstr "줄에서 기다리는 중…"
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
 msgstr "기다리는 중…"
+
+#: src/pages/shell/computer-panel.tsx
+msgid "Wake"
+msgstr "깨우기"
 
 #: src/pages/settings-nav.ts
 msgid "Wallet"

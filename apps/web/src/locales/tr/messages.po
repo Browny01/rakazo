@@ -877,6 +877,10 @@ msgstr ""
 msgid "Ask"
 msgstr "Sor"
 
+#: src/pages/shell/computer-panel.tsx
+msgid "Asleep"
+msgstr "Uykuda"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -6302,6 +6306,10 @@ msgstr "Sırada bekleniyor…"
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
 msgstr "Bekleniyor…"
+
+#: src/pages/shell/computer-panel.tsx
+msgid "Wake"
+msgstr "Uyandır"
 
 #: src/pages/settings-nav.ts
 msgid "Wallet"

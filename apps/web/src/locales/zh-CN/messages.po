@@ -877,6 +877,10 @@ msgstr "产物"
 msgid "Ask"
 msgstr "询问"
 
+#: src/pages/shell/computer-panel.tsx
+msgid "Asleep"
+msgstr "休眠中"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -6302,6 +6306,10 @@ msgstr "排队等候…"
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
 msgstr "等待中…"
+
+#: src/pages/shell/computer-panel.tsx
+msgid "Wake"
+msgstr "唤醒"
 
 #: src/pages/settings-nav.ts
 msgid "Wallet"

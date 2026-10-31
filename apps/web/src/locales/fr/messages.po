@@ -877,6 +877,10 @@ msgstr "Artefacts"
 msgid "Ask"
 msgstr "Demander"
 
+#: src/pages/shell/computer-panel.tsx
+msgid "Asleep"
+msgstr "En veille"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -6302,6 +6306,10 @@ msgstr "En attente dans la file…"
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
 msgstr "En attente…"
+
+#: src/pages/shell/computer-panel.tsx
+msgid "Wake"
+msgstr "Réveiller"
 
 #: src/pages/settings-nav.ts
 msgid "Wallet"

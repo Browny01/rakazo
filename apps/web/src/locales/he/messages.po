@@ -877,6 +877,10 @@ msgstr "תוצרים"
 msgid "Ask"
 msgstr "לשאול"
 
+#: src/pages/shell/computer-panel.tsx
+msgid "Asleep"
+msgstr "במצב שינה"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -6302,6 +6306,10 @@ msgstr "ממתין בתור…"
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
 msgstr "ממתין…"
+
+#: src/pages/shell/computer-panel.tsx
+msgid "Wake"
+msgstr "הער"
 
 #: src/pages/settings-nav.ts
 msgid "Wallet"
