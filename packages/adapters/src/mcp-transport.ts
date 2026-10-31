@@ -7,10 +7,15 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 import type { Transport } from "@modelcontextprotocol/sdk/shared/transport.js";
 import type { CallToolResult, ListToolsResult } from "@modelcontextprotocol/sdk/types.js";
 import { isLocalhostOrLoopbackIp } from "@rakazo/contracts";
+import { cancelResponseBody } from "@rakazo/core";
 import { combineSignals } from "./connector-safety.js";
 
 import type { InstalledMcpBin } from "./mcp-package-installer.js";
-import { isInstalledMcpBin, isNpxCommand } from "./mcp-package-installer.js";
+import {
+  isInstalledMcpBin,
+  isNpxCommand,
+  isPackageRunnerCommand,
+} from "./mcp-package-installer.js";
 
 import type { RemoteTransportDependencies, SafeRemoteFetch } from "./remote-mcp.js";
 import { createSafeRemoteFetch, listMcpTools } from "./remote-mcp.js";
@@ -215,6 +220,7 @@ export function secureFetch(
       ? await (network.fetch ?? globalThis.fetch)(url, requestInit)
       : await safeRemoteFetch(url, requestInit);
     if (response.status >= 300 && response.status < 400) {
+      cancelResponseBody(response);
       throw new Error("MCP redirects are not permitted; configure the final HTTPS URL explicitly");
     }
     return response;
@@ -278,11 +284,14 @@ export function mcpStdioAvailable(policy: McpStdioPolicy): boolean {
   return policy.stdioEnabled === true && (policy.allowedCommands?.length ?? 0) > 0;
 }
 
+const PACKAGE_RUNNER_REFUSAL = "Only npx can launch packages here";
+
 /** Why this deployment can't run a stdio server with `command`, or undefined when it can. */
 export function mcpStdioRefusal(command: string, policy: McpStdioPolicy): string | undefined {
   if (!mcpStdioAvailable(policy)) return "Stdio MCP servers aren't available here";
   if (!isAllowedStdioCommand(command, policy.allowedCommands ?? []))
     return "This stdio command isn't allowed here";
+  if (isPackageRunnerCommand(command)) return PACKAGE_RUNNER_REFUSAL;
   return undefined;
 }
 
@@ -290,6 +299,7 @@ function stdioParams(options: McpStdioOptions): StdioServerParameters {
   if (!isAllowedStdioCommand(options.command, options.allowedCommands)) {
     throw new Error("MCP stdio command is not in the configured allowlist");
   }
+  if (isPackageRunnerCommand(options.command)) throw new Error(PACKAGE_RUNNER_REFUSAL);
   if (options.installedBin !== undefined && !isInstalledMcpBin(options.installedBin)) {
     throw new Error("MCP stdio bin was not installed by Rakazo");
   }
