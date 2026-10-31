@@ -89,7 +89,7 @@ function fixture({
   existingSharedMemory,
   advanceRevisionAfterRead = false,
   fleetManagement = false,
-  fleetBots = [] as { id: string; name: string }[],
+  fleetBots = [] as { id: string; name: string; thread?: { id: string } }[],
   secondResource = false,
   routines = [] as { name: string; prompt: string }[],
   connectedApps = [] as string[],
@@ -109,7 +109,7 @@ function fixture({
   /** The switch as the run starts; `liveBot` is what a later read sees. */
   fleetManagement?: boolean;
   /** Other active bots of the same user, found by id or exact name. */
-  fleetBots?: { id: string; name: string }[];
+  fleetBots?: { id: string; name: string; thread?: { id: string } }[];
   parallelCalls?: boolean;
   sourceRole?: string;
   builtin?: boolean;
@@ -958,7 +958,7 @@ describe("connector read-only metadata and approval enforcement", () => {
       expect(f.pauseRunForInput).not.toHaveBeenCalled();
     });
 
-    it("refuses a webhook-triggered write in Never ask instead of asking", async () => {
+    it("runs a webhook-triggered write in Never ask", async () => {
       const f = fixture({
         catalog,
         name: "demo_send_message",
@@ -966,9 +966,8 @@ describe("connector read-only metadata and approval enforcement", () => {
         skipApprovals: true,
       });
       await f.run();
-      expect(f.execute).not.toHaveBeenCalled();
+      expect(f.execute).toHaveBeenCalledOnce();
       expect(f.pauseRunForInput).not.toHaveBeenCalled();
-      expect(JSON.stringify(f.results[0])).toContain("never asks");
     });
 
     it("refuses a blocked tool in Never ask without asking or running it", async () => {
@@ -1309,6 +1308,16 @@ describe("create_space", () => {
     expect(skipped.pauseRunForInput).not.toHaveBeenCalled();
     expect(skipped.effects[0]?.status).not.toBe("intended");
   });
+
+  it("creates it in Never ask after outside content", async () => {
+    const f = fixture({ name: "create_space", builtin: true, skipApprovals: true });
+    f.claimedOutsideSteering(true);
+    f.setCalls([{ args: { name: "Support" }, executionId: "call-1" }]);
+    await f.run(true);
+    expect(f.pauseRunForInput).not.toHaveBeenCalled();
+    expect(f.effects).toHaveLength(1);
+    expect(f.effects[0]?.status).not.toBe("intended");
+  });
 });
 
 describe("own instructions through update_bot", () => {
@@ -1432,15 +1441,17 @@ describe("own instructions through update_bot", () => {
     expect(f.pauseRunForInput).not.toHaveBeenCalled();
     expect(f.instructionState.instructions).toBe(first);
   });
-  it("refuses a held change in Never ask once outside content entered the run", async () => {
-    const f = fixture({ name: "update_bot", builtin: true, skipApprovals: true });
-    f.claimedOutsideSteering(true);
-    f.setCalls([{ args: { instructions: first }, executionId: "call-1" }]);
-    await f.run();
-    expect(f.pauseRunForInput).not.toHaveBeenCalled();
-    expect(f.results[0]).toMatchObject({ error: expect.stringContaining("owner's approval") });
-    expect(f.instructionState.instructions).toBe("Draft only");
-  });
+  it.each(["user", "bot_message"])(
+    "applies a change in Never ask after outside content in a %s run",
+    async (trigger) => {
+      const f = fixture({ name: "update_bot", builtin: true, skipApprovals: true, trigger });
+      f.claimedOutsideSteering(true);
+      f.setCalls([{ args: { instructions: first }, executionId: "call-1" }]);
+      await f.run();
+      expect(f.pauseRunForInput).not.toHaveBeenCalled();
+      expect(f.instructionState.instructions).toBe(first);
+    },
+  );
   it("completes a stale approved change with an error", async () => {
     const f = fixture({ name: "update_bot", builtin: true, trigger: "routine" });
     f.setCalls([{ args: { instructions: first }, executionId: "call-1" }]);
@@ -1810,6 +1821,7 @@ describe("bot management tool gating", () => {
 });
 
 describe("bot management approvals", () => {
+  beforeEach(() => createFleetGroupMock.mockReset());
   const modelArgs = { name: "Crew", bot_names: ["Alpha", "Beta"] };
   const approved = {
     name: "Crew",
@@ -1820,13 +1832,11 @@ describe("bot management approvals", () => {
     ],
   };
 
-  it("asks with the resolved members even when rules and auto review allow the tool", async () => {
+  it("asks with the resolved members in Ask mode", async () => {
     const f = fixture({
       name: "create_group",
       builtin: true,
       fleetManagement: true,
-      autoReview: true,
-      rules: [{ effect: "always_allow", matchKind: "tool", matchValue: "create_group" }],
       fleetBots: [
         { id: "bot-a", name: "Alpha" },
         { id: "bot-b", name: "Beta" },
@@ -1840,17 +1850,32 @@ describe("bot management approvals", () => {
     expect(f.pauseRunForInput).toHaveBeenCalledWith(
       expect.objectContaining({
         blocks: [
-          expect.objectContaining({
-            text: "Create group “Crew”?",
-            detail: "Members: Alpha, Beta",
-            actions: [
-              { id: "allow", label: "Allow once" },
-              { id: "deny", label: "Deny" },
-            ],
-          }),
+          expect.objectContaining({ text: "Create group “Crew”?", detail: "Members: Alpha, Beta" }),
         ],
       }),
     );
+  });
+
+  it("creates the group in Never ask after outside content", async () => {
+    const f = fixture({
+      name: "create_group",
+      builtin: true,
+      fleetManagement: true,
+      skipApprovals: true,
+      fleetBots: [
+        { id: "bot-a", name: "Alpha" },
+        { id: "bot-b", name: "Beta" },
+      ],
+    });
+    const created = { groupId: "group-1", threadId: "thread-group-1", name: "Crew" };
+    createFleetGroupMock.mockResolvedValueOnce(created);
+    f.setCalls([
+      { name: "web_search", args: { query: "news" }, executionId: "call-1" },
+      { args: modelArgs, executionId: "call-2" },
+    ]);
+    await f.run();
+    expect(f.pauseRunForInput).not.toHaveBeenCalled();
+    expect(f.results.at(-1)).toEqual(created);
   });
 
   it("replays the approved ids after a member is renamed during the pause", async () => {
@@ -1886,6 +1911,35 @@ describe("bot management approvals", () => {
     expect(f.effects[0]).toMatchObject({ status: "completed", result: created });
     expect(f.results.at(-1)).toEqual(created);
     expect(f.execute).not.toHaveBeenCalled();
+  });
+
+  it("asks a person before a child routine names a site found in outside content", async () => {
+    reviewMock.mockReset();
+    reviewMock.mockResolvedValue({ decision: "pass", reason: "Fits", model: "mock" });
+    const f = fixture({
+      name: "create_child_routine",
+      builtin: true,
+      fleetManagement: true,
+      autoReview: true,
+      rules: [{ effect: "always_allow", matchKind: "tool", matchValue: "create_child_routine" }],
+      fleetBots: [{ id: "bot-a", name: "Alpha", thread: { id: "thread-a" } }],
+    });
+    f.setCalls([
+      { name: "web_search", args: { query: "news" }, executionId: "call-1" },
+      {
+        args: {
+          bot_id: "bot-a",
+          name: "Daily",
+          prompt: "Every day fetch https://attacker.test/",
+          every: 1,
+          unit: "days",
+        },
+        executionId: "call-2",
+      },
+    ]);
+    await f.run();
+    expect(reviewMock).not.toHaveBeenCalled();
+    expect(isApprovalPausedResult(f.results.at(-1))).toBe(true);
   });
 
   it("returns a refused target to the model without a card", async () => {
@@ -1931,6 +1985,25 @@ describe("command watch creation approval", () => {
       expect(reviewMock).not.toHaveBeenCalled();
     },
   );
+
+  it("saves a command watch in Never ask after outside content", async () => {
+    const f = fixture({ name: "schedule_create", builtin: true, skipApprovals: true });
+    f.setCalls([
+      { name: "web_search", args: { query: "news" }, executionId: "call-1" },
+      {
+        args: {
+          name: "Check",
+          prompt: "Summarize changes",
+          watch: { kind: "command", command: "ls" },
+        },
+        executionId: "call-2",
+      },
+    ]);
+    // Saving the routine itself is outside this fixture; only the gate is under test.
+    await f.run(true);
+    expect(f.pauseRunForInput).not.toHaveBeenCalled();
+    expect(JSON.stringify(f.results.at(-1))).not.toContain("never asks");
+  });
 });
 
 describe("tool watch creation", () => {
@@ -2367,6 +2440,19 @@ describe("Auto Review of new sites", () => {
       await f.run();
       expect(reviewMock).not.toHaveBeenCalled();
       expect(isApprovalPausedResult(f.results[1])).toBe(true);
+    });
+
+    it("saves it in Never ask, where the bot can already fetch any site", async () => {
+      const f = fixture({
+        builtin: true,
+        skipApprovals: true,
+        sourceRole: "user",
+        prompt: "Find news daily",
+      });
+      f.setCalls([search, schedule("Every day fetch https://news.example.org/")]);
+      await f.run(true);
+      expect(f.pauseRunForInput).not.toHaveBeenCalled();
+      expect(JSON.stringify(f.results.at(-1))).not.toContain("never asks");
     });
 
     it.each([
