@@ -5,7 +5,6 @@ import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ApprovalRulePreviewForm } from "../../components/approval-rule-preview";
 import { LoadFailure } from "../../components/load-failure";
 import { NativeActionButton } from "../../components/native-action-button";
 import { SettingsGroup, SettingsRow } from "../../components/settings-group";
@@ -37,7 +36,6 @@ export default function ApprovalRules() {
   const [adding, setAdding] = useState(false);
   const [tool, setTool] = useState("");
   const [pending, setPending] = useState(false);
-  const [previewRule, setPreviewRule] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
@@ -182,45 +180,33 @@ export default function ApprovalRules() {
               rule.matchKind === "tool" ? humanizeToolName(rule.matchValue) : rule.matchValue;
             const switchable = rule.matchKind !== "category";
             return (
-              <View key={rule.id}>
-                <MenuView
-                  actions={[
-                    { id: "preview", title: t("Preview") },
-                    ...(switchable
-                      ? (["always_allow", "require_approval", "deny"] as const).map((effect) => ({
-                          id: effect,
-                          title: effectLabel(effect),
-                          state: rule.effect === effect ? ("on" as const) : ("off" as const),
-                        }))
-                      : []),
-                    { id: "remove", title: t("Remove"), attributes: { destructive: true } },
-                  ]}
-                  colorScheme={colorScheme}
-                  onPressAction={(event) => {
-                    const action = event.nativeEvent.event;
-                    if (!pending && action === "preview")
-                      setPreviewRule(previewRule === rule.id ? null : rule.id);
-                    if (!pending && isRuleAction(action)) void applyRuleAction(rule, action);
-                  }}
+              <MenuView
+                key={rule.id}
+                actions={[
+                  ...(switchable
+                    ? (["always_allow", "require_approval", "deny"] as const).map((effect) => ({
+                        id: effect,
+                        title: effectLabel(effect),
+                        state: rule.effect === effect ? ("on" as const) : ("off" as const),
+                      }))
+                    : []),
+                  { id: "remove", title: t("Remove"), attributes: { destructive: true } },
+                ]}
+                colorScheme={colorScheme}
+                onPressAction={(event) => {
+                  const action = event.nativeEvent.event;
+                  if (!pending && isRuleAction(action)) void applyRuleAction(rule, action);
+                }}
+                title={title}
+              >
+                <SettingsRow
+                  accessible
+                  accessibilityRole="button"
+                  dimmed={pending}
                   title={title}
-                >
-                  <SettingsRow
-                    accessible
-                    accessibilityRole="button"
-                    dimmed={pending}
-                    title={title}
-                    value={effectLabel(rule.effect)}
-                  />
-                </MenuView>
-                {previewRule === rule.id ? (
-                  <ApprovalRulePreviewForm
-                    key={`${spaceId}:${rule.id}:${JSON.stringify(rules)}`}
-                    rule={rule}
-                    scope={scope}
-                    rpc={rpc}
-                  />
-                ) : null}
-              </View>
+                  value={effectLabel(rule.effect)}
+                />
+              </MenuView>
             );
           })}
         </SettingsGroup>
